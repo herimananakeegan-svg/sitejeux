@@ -219,89 +219,63 @@ footer p a {
     letter-spacing: 2px; /* optionnel pour un effet plus "logo" */
 }
 
-/* --------- MEDIA QUERIES POUR MOBILE --------- */
 @media screen and (max-width: 768px) {
     /* Navbar */
     .navbar {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 15px 10px;
+        flex-direction: row; /* garde le logo à gauche et les liens à droite */
+        padding: 10px 15px;
+    }
+
+    .navbar .logo h1 {
+        font-size: 20px; /* plus petit sur tel */
     }
 
     .navbar .menu {
-        flex-direction: column;
-        width: 100%;
-        margin-top: 10px;
-        gap: 10px;
+        flex-direction: row; /* liens toujours en ligne */
     }
 
     .navbar .menu li {
-        margin-left: 0;
+        margin-left: 15px; /* espace réduit */
     }
 
     .navbar .menu li a {
-        font-size: 16px;
+        font-size: 13px; /* texte plus petit */
     }
 
     /* Hero */
     .content {
-        height: auto;
-        padding: 50px 10px;
+        height: 90vh; /* occupe bien l’écran */
+        padding: 0 15px;
         align-items: center;
         text-align: center;
     }
 
     .content h1 {
-        font-size: 35px;
+        font-size: 32px;
     }
 
     .content p {
-        font-size: 16px;
-        margin-top: 10px;
+        font-size: 15px;
     }
 
     .btn-decouvrir {
-        padding: 12px 25px;
+        padding: 12px 20px;
         font-size: 14px;
     }
 
-    /* Titre section produits */
+    /* Produits */
     .Produits_texte {
-        font-size: 24px;
+        font-size: 22px;
         margin: 20px 10px;
         text-align: center;
     }
 
-    /* Produits */
     .produits {
-        grid-template-columns: 1fr; /* chaque carte prend toute la largeur */
-        gap: 15px;
+        grid-template-columns: 1fr; /* une seule colonne */
+        gap: 20px;
     }
 
     .carte img {
         height: 200px;
-    }
-
-    .carte .desc {
-        font-size: 14px;
-    }
-
-    .carte .titre {
-        font-size: 16px;
-    }
-
-    .carte .prix {
-        font-size: 16px;
-    }
-
-    .carte .achat {
-        font-size: 12px;
-        padding: 6px 12px;
-    }
-
-    /* Footer */
-    footer p {
-        line-height: 40px;
-        font-size: 12px;
     }
 }
