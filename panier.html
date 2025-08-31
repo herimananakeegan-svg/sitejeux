@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mon Panier - ATMK</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    /* RESET & BODY */
+    * {margin:0;padding:0;box-sizing:border-box;font-family:'Roboto Condensed',sans-serif;}
+    body{background:#0d0d0d;color:white;line-height:1.4;}
+
+    /* NAVBAR */
+    .navbar {
+      padding: 15px 5%;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      position:sticky; top:0;
+      z-index:999;
+      background:rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+    }
+    .navbar .logo h1{color:#f63e4e;font-weight:700;cursor:pointer;}
+    .navbar .menu{list-style:none;display:flex;}
+    .navbar .menu li{margin-left:25px;}
+    .navbar .menu li a{color:white;text-decoration:none;font-size:15px;font-weight:bold;position:relative;transition:0.3s;}
+    .navbar .menu li a:hover{color:#f63e4e;}
+    .navbar .menu li a:hover::after{content:'';position:absolute;width:100%;height:3px;background:#f63e4e;bottom:-5px;left:0;}
+    body>*:not(.navbar){margin-top:80px;}
+
+    /* PANIER CONTAINER */
+    .panier-container{max-width:900px;margin:0 auto;padding:20px;}
+
+    .panier-container h1{text-align:center;margin-bottom:30px;color:#f63e4e;font-size:32px;}
+
+    table{width:100%;border-collapse:collapse;}
+    th,td{padding:15px;text-align:left;}
+    th{border-bottom:2px solid #444;}
+    tr:nth-child(even){background:#1a1a1a;border-radius:8px;}
+    tr td{vertical-align:middle;}
+
+    /* Bouton Supprimer */
+    .supprimer-btn {
+      border: none;
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: 8px;
+      background: #f63e4e;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      transition: background .2s ease, transform .15s ease;
+    }
+    .supprimer-btn:hover{background:#d83442;transform:scale(1.05);}
+    .supprimer-btn:active{transform:scale(0.95);}
+
+    /* TOTAL & PAIEMENT */
+    .panier-total{margin-top:25px;text-align:right;}
+    #total{font-size:22px;font-weight:700;color:#f63e4e;margin-right:10px;}
+
+    #payer-btn {
+      display:inline-block;
+      margin-top:15px;
+      padding:15px 30px;
+      font-size:18px;
+      font-weight:700;
+      color:white;
+      background:linear-gradient(135deg,#f63e4e,#ff707c);
+      border:none;
+      border-radius:12px;
+      cursor:pointer;
+      transition:transform 0.2s ease, box-shadow 0.3s ease;
+      text-transform:uppercase;
+      letter-spacing:1px;
+    }
+    #payer-btn:hover{
+      transform:translateY(-3px);
+      box-shadow:0 8px 20px rgba(246,62,78,0.6);
+    }
+
+    /* Texte stylé */
+    h1,h2,h3,h4,h5,h6{font-family:'Roboto Condensed',sans-serif;font-weight:700;}
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo"><h1>ATMK.COM</h1></div>
+    <ul class="menu"> 
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="nouveautés.html">Nouveautés</a></li>
+      <li><a href="soldes.html">Soldes</a></li>
+      <li><a href="panier.html" class="active"><i class="fa-solid fa-cart-shopping"></i></a></li>
+    </ul>
+  </nav>
+
+  <!-- PANIER -->
+  <section class="panier-container">
+    <h1>Votre Panier</h1>
+    <table id="panier-table">
+      <thead>
+        <tr>
+          <th>Article</th>
+          <th>Prix</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Les articles seront injectés par JS -->
+      </tbody>
+    </table>
+    <div class="panier-total">
+      <span>Total : <span id="total">0 &euro;</span></span>
+      <br>
+      <button id="payer-btn">Procéder au paiement</button>
+    </div>
+  </section>
+
+  <script>
+    let panier = JSON.parse(localStorage.getItem("panier")) || [];
+    const panierTable = document.querySelector("#panier-table tbody");
+    const totalElement = document.getElementById("total");
+
+    function afficherPanier() {
+      panierTable.innerHTML = "";
+      if (panier.length === 0) {
+        panierTable.innerHTML = `<tr><td colspan="3" style="text-align:center; padding:20px; color:#aaa;">Votre panier est vide</td></tr>`;
+      } else {
+        panier.forEach((article,index)=>{
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${article.nom}</td>
+            <td>${article.prix} &euro;</td>
+            <td><button class="supprimer-btn" data-index="${index}">Supprimer</button></td>
+          `;
+          panierTable.appendChild(row);
+        });
+      }
+      mettreAJourTotal();
+    }
+
+    function mettreAJourTotal() {
+      let total = panier.reduce((sum,article)=>sum+Number(article.prix),0);
+      totalElement.innerHTML = total+" &euro;";
+    }
+
+    document.addEventListener("click", function(e){
+      if(e.target.classList.contains("supprimer-btn")){
+        const index = e.target.getAttribute("data-index");
+        panier.splice(index,1);
+        localStorage.setItem("panier",JSON.stringify(panier));
+        afficherPanier();
+      }
+    });
+
+    document.getElementById("payer-btn").addEventListener("click",()=>{
+      if(panier.length===0){
+        alert("Votre panier est vide !");
+      } else {
+       let message = "Bonjour, je veux finaliser mon paiement.%0A%0AVoici mon panier :%0A";
+panier.forEach(article => {
+  message += "- " + article.nom + " : " + article.prix + " EUR%0A"; 
+});
+let total = panier.reduce((sum, article) => sum + Number(article.prix), 0);
+message += "%0ATotal : " + total + " EUR";
+        // Redirection vers Telegram avec message pré-rempli
+        window.location.href = "https://t.me/truebadboy512?text=" + message;
+      }
+    });
+
+    afficherPanier();
+  </script>
+
+</body>
+</html>

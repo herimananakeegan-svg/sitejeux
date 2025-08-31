@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* BODY */
+body {
+    margin: 0;
+    background-color: #0d0d0d;
+}
+
+/* CONTENEUR SIGNUP */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding-top: 80px;
+}
+
+/* SIGNUP BOX */
+.signup-box {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 440px;
+    padding: 30px;
+}
+
+.signup-header {
+    text-align: center;
+    margin: 20px 0 40px 0;
+}
+
+.signup-header header {
+    color: white;
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.input-box .input-field {
+    width: 100%;
+    height: 60px;
+    font-size: 17px;
+    padding: 0 25px;
+    margin-bottom: 15px;
+    border-radius: 30px;
+    border: none;
+    box-shadow: 0px 5px 10px 1px rgba(0,0,0,0.05);
+    outline: none;
+    transition: 0.3s;
+}
+
+::placeholder {
+    font-weight: 500;
+    color: black;
+}
+
+.input-field:focus {
+    transform: scale(1.02);
+}
+
+.input-submit {
+    position: relative;
+    margin-top: 15px;
+}
+
+.submit-btn {
+    width: 100%;
+    height: 60px;
+    background: #222;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.input-submit label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: #fff;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background: #000;
+    transform: scale(1.05);
+}
+
+.login-link {
+    text-align: center;
+    font-size: 15px;
+    margin-top: 20px;
+    color: #fff;
+}
+
+.login-link a {
+    color: #f63e4e;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+/* NAVBAR */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    padding: 15px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+}
+
+.navbar .logo h1 {
+    color: #f63e4e;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.navbar .menu {
+    list-style: none;
+    display: flex;
+}
+
+.navbar .menu li {
+    margin-left: 25px;
+}
+
+.navbar .menu li a {
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: bold;
+    position: relative;
+    transition: 0.3s;
+}
+
+/* lien actif = rouge */
+.navbar .menu li a.active {
+    color: #f63e4e;
+}
+
+/* soulignement animé */
+.navbar .menu li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    background: #f63e4e;
+    bottom: -5px;
+    left: 0;
+    transition: width 0.3s ease;
+}
+
+.navbar .menu li a:hover::after {
+    width: 100%;
+}
+
+.navbar .menu li a:hover {
+    color: #f63e4e;
+}
+

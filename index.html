@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATMK</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Roboto+Condensed&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+ 
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="logo"><h1>ATMK.COM</h1></div>
+        <ul class="menu"> 
+            <li><a href="index.html" class="active">Accueil</a></li>
+            <li><a href="nouveautés.html">Nouveautés</a></li>
+            <li><a href="soldes.html">Soldes</a></li>
+            <li><a href="panier.html"><i class="fa-solid fa-cart-shopping"></i></a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="content">
+        <h1>Nouveautés</h1>
+        <p>Tous nos jeux à prix cassés</p>
+       <a href="decouvir.html" class="btn-decouvrir">Découvrir</a>
+
+    </section>
+
+    <!-- PRODUITS -->
+    <h1 class="Produits_texte">Nos meilleures ventes</h1>
+    <section class="section_produits">
+        <div class="produits">
+
+            <!-- Produit 1 -->
+            <div class="carte">
+                <div class="img"><img src="RED_KEYART_STD_RGB_WW.jpg" alt="Assassin's Creed Shadows"></div>
+                <div class="desc">Assassin's Creed Shadows</div>
+                <div class="titre">PS5</div>
+                <div class="box">
+                    <div class="prix">30€</div>
+                    <button class="achat" data-nom="Assassin's Creed Shadows" data-prix="30">Ajouter au panier</button>
+                </div>
+            </div>
+
+            <!-- Produit 2 -->
+            <div class="carte">
+                <div class="img"><img src="GTAV_Official_Cover_Art.jpg" alt="GTA V"></div>
+                <div class="desc">GTA V</div>
+                <div class="titre">PS5</div>
+                <div class="box">
+                    <div class="prix">30€</div>
+                    <button class="achat" data-nom="GTA V" data-prix="30">Ajouter au panier</button>
+                </div>
+            </div>
+
+            <!-- Produit 3 -->
+            <div class="carte">
+                <div class="img"><img src="TCM_KA_lowRez.jpg.avif" alt="The Crew Motorfest"></div>
+                <div class="desc">The Crew Motorfest</div>
+                <div class="titre">PS5</div>
+                <div class="box">
+                    <div class="prix">30€</div>
+                    <button class="achat" data-nom="The Crew Motorfest" data-prix="30">Ajouter au panier</button>
+                </div>
+            </div>
+
+            <!-- Produit 4 -->
+            <div class="carte">
+                <div class="img"><img src="ForzaHorizon5_KeyArt_Horiz_RGB_Final.jpg" alt="Forza Horizon 5"></div>
+                <div class="desc">Forza Horizon 5</div>
+                <div class="titre">PS5</div>
+                <div class="box">
+                    <div class="prix">30€</div>
+                    <button class="achat" data-nom="Forza Horizon 5" data-prix="30">Ajouter au panier</button>
+                </div>
+            </div>
+
+            <!-- Produit 5 -->
+            <div class="carte">
+                <div class="img"><img src="spider.jpg" alt="Spider-man 2"></div>
+                <div class="desc">Spider-man 2</div>
+                <div class="titre">PS5</div>
+                <div class="box">
+                    <div class="prix">30€</div>
+                    <button class="achat" data-nom="Spider-man 2" data-prix="30">Ajouter au panier</button>
+                </div>
+            </div>
+
+            <!-- Produit 6 -->
+            <div class="carte">
+                <div class="img"><img src="ufc.jpg" alt="UFC 5"></div>
+                <div class="desc">UFC 5</div>
+                <div class="titre">PS5</div>
+                <div class="box">
+                    <div class="prix">30€</div>
+                    <button class="achat" data-nom="UFC 5" data-prix="30">Ajouter au panier</button>
+                </div>
+            </div>
+
+            <!-- Produit 7 -->
+            <div class="carte">
+                <div class="img"><img src="2K25.jpg" alt="NBA 2K25"></div>
+                <div class="desc">NBA 2K25</div>
+                <div class="titre">PS5</div>
+                <div class="box">
+                    <div class="prix">30€</div>
+                    <button class="achat" data-nom="NBA 2K25" data-prix="30">Ajouter au panier</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>Copyright &copy; <a href="#">Gameshop</a></p>
+    </footer>
+
+    <!-- Script panier -->
+    <script src="panier.js"></script>
+    <!-- SCRIPT PANIER -->
+  <script>
+    const boutonsAchat = document.querySelectorAll(".achat");
+
+    boutonsAchat.forEach(bouton => {
+      bouton.addEventListener("click", () => {
+        const nom = bouton.getAttribute("data-nom");
+        const prix = parseInt(bouton.getAttribute("data-prix"));
+
+        let panier = JSON.parse(localStorage.getItem("panier")) || [];
+        panier.push({ nom, prix });
+        localStorage.setItem("panier", JSON.stringify(panier));
+
+        alert(nom + " a été ajouté au panier !");
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soldes - ATMK</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Roboto+Condensed&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        /* Barre de recherche stylée */
+        .search-bar {
+            max-width: 900px;
+            margin: 100px auto 30px; /* espace sous la navbar */
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .search-bar input {
+            flex: 1; /* prend tout l’espace */
+            padding: 12px 20px;
+            border-radius: 30px;
+            border: 2px solid #f63e4e;
+            background: #1a1a1a;
+            color: white;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .search-bar input:focus {
+            border-color: #ff7b00;
+            box-shadow: 0 0 10px rgba(246,62,78,0.6);
+        }
+
+        .search-bar select {
+            flex: 0; /* largeur fixe */
+            width: 150px;
+            padding: 12px 15px;
+            border-radius: 30px;
+            border: 2px solid #f63e4e;
+            background: #1a1a1a;
+            color: white;
+            font-size: 15px;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .search-bar select:hover {
+            border-color: #ff7b00;
+            box-shadow: 0 0 10px rgba(246,62,78,0.6);
+        }
+
+        /* Prix barré et prix soldé */
+        .old-price {
+            text-decoration: line-through;
+            color: grey;
+            margin-right: 8px;
+        }
+
+        .prix {
+            color: #f63e4e;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="logo"><h1>ATMK.COM</h1></div>
+        <ul class="menu"> 
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="nouveautés.html">Nouveautés</a></li>
+            <li><a href="soldes.html" class="active">Soldes</a></li>
+            <li><a href="panier.html"><i class="fa-solid fa-cart-shopping"></i></a></li>
+        </ul>
+    </nav>
+
+    <!-- BARRE DE RECHERCHE ET TRI -->
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Rechercher un jeu en solde...">
+        <select id="sortSelect">
+            <option value="default">Trier par prix</option>
+            <option value="asc">Prix croissant</option>
+            <option value="desc">Prix décroissant</option>
+        </select>
+    </div>
+
+    <!-- GRILLE DE JEUX EN SOLDES -->
+    <section class="section_produits">
+        <div class="produits" id="gamesGrid">
+            <!-- Jeux générés via JS -->
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>Copyright &copy; <a href="#">Gameshop</a></p>
+    </footer>
+
+    <script>
+        const games = [
+            { title: "Cyberpunk 2077", oldPrice: 30, price: 20, img: "cyber.jpg" },
+            { title: "EA FC 25", oldPrice: 30, price: 15, img: "fifa.jpg.avif" },
+            { title: "The Last of Us Part II", oldPrice: 30, price: 25, img: "tlou.jpg" },
+            { title: "Elden Ring", oldPrice: 30, price: 18, img: "elden.jpg.avif" },
+            { title: "Hogwarts Legacy", oldPrice: 30, price: 22, img: "hog.jpg" }
+        ];
+
+        const gamesGrid = document.getElementById('gamesGrid');
+        const searchInput = document.getElementById('searchInput');
+        const sortSelect = document.getElementById('sortSelect');
+
+        function displayGames(list) {
+            gamesGrid.innerHTML = "";
+            list.forEach(game => {
+                const card = document.createElement('div');
+                card.classList.add('carte');
+                card.innerHTML = `
+                    <div class="img"><img src="${game.img}" alt="${game.title}"></div>
+                    <div class="desc">${game.title}</div>
+                    <div class="titre">PS5</div>
+                    <div class="box">
+                        <div class="prix">
+                            <span class="old-price">${game.oldPrice}€</span>
+                            <span>${game.price}€</span>
+                        </div>
+                        <button class="achat" data-nom="${game.title}" data-prix="${game.price}">Ajouter au panier</button>
+                    </div>
+                `;
+                gamesGrid.appendChild(card);
+            });
+            addCartListeners();
+        }
+
+        function filterAndSort() {
+            let filtered = games.filter(game =>
+                game.title.toLowerCase().includes(searchInput.value.toLowerCase())
+            );
+
+            if (sortSelect.value === "asc") filtered.sort((a,b)=>a.price-b.price);
+            else if (sortSelect.value === "desc") filtered.sort((a,b)=>b.price-a.price);
+
+            displayGames(filtered);
+        }
+
+        function addCartListeners() {
+            const boutonsAchat = document.querySelectorAll(".achat");
+            boutonsAchat.forEach(bouton => {
+                bouton.addEventListener("click", () => {
+                    const nom = bouton.getAttribute("data-nom");
+                    const prix = parseInt(bouton.getAttribute("data-prix"));
+
+                    let panier = JSON.parse(localStorage.getItem("panier")) || [];
+                    panier.push({ nom, prix });
+                    localStorage.setItem("panier", JSON.stringify(panier));
+
+                    alert(nom + " a été ajouté au panier !");
+                });
+            });
+        }
+
+        searchInput.addEventListener('input', filterAndSort);
+        sortSelect.addEventListener('change', filterAndSort);
+
+        displayGames(games);
+    </script>
+</body>
+</html>
+
